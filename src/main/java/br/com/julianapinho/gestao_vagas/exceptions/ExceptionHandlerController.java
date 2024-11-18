@@ -1,5 +1,7 @@
 package br.com.julianapinho.gestao_vagas.exceptions;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ import java.util.List;
 public class ExceptionHandlerController {
 
     private MessageSource messageSource;
+
+    private final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
     private ExceptionHandlerController(MessageSource message){
         this.messageSource = message;
@@ -32,4 +36,17 @@ public class ExceptionHandlerController {
 
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UserFoundException.class)
+    public ResponseEntity<Object> handleException(Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<String> handleUnexpectedException(Throwable e) {
+        var message = "Unexpected server error, see the logs";
+        logger.error(message, e);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
