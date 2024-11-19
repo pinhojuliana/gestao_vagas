@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CandidateController {
 
     @Autowired
-    private CreateCandidateUseCase createCandidateuseCase;
+    private CreateCandidateUseCase createCandidateUseCase;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<CandidateEntity> create(@Valid @RequestBody CandidateEntity candidateEntity){
-           var result = this.createCandidateuseCase.execute(candidateEntity);
+           var result = this.createCandidateUseCase.execute(candidateEntity);
            return ResponseEntity.ok(result);
     }
 }
