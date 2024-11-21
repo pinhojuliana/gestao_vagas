@@ -4,7 +4,7 @@ import br.com.julianapinho.gestao_vagas.modules.company.dto.AuthCompanyDTO;
 import br.com.julianapinho.gestao_vagas.modules.company.repositories.CompanyRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,15 +15,18 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Service
-@RequiredArgsConstructor
+
 public class AuthCompanyUseCase {
 
     @Value("${security.token.secret}")
-    private final String secretKey;
+    @Autowired
+    String secretKey;
 
-    private final CompanyRepository companyRepository;
+    @Autowired
+    CompanyRepository companyRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public String execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
         var company = this.companyRepository.findByUsername(authCompanyDTO.username())

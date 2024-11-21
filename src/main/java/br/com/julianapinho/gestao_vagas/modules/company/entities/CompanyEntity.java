@@ -32,8 +32,7 @@ public class CompanyEntity {
     @Email(message = "O campo [e-mail] deve conter um e-mail válido")
     private String email;
 
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\[\\]{}|\\\\;:'\",.<>?/~`-])(?=.*\\d).*$", message = "A senha deve conter pelo menos 1 caractere maiusculo, 1 número e 1 caractere especial.")
-    @Length(min = 10, max = 20, message = "A senha deve conter entre [10] e [20] caracteres")
+    @Length(min = 10, max = 20)
     private String password;
 
     @URL(message = "A URL deve ser válida")

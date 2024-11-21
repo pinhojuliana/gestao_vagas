@@ -3,18 +3,19 @@ package br.com.julianapinho.gestao_vagas.modules.company.use_cases;
 import br.com.julianapinho.gestao_vagas.exceptions.UserFoundException;
 import br.com.julianapinho.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.julianapinho.gestao_vagas.modules.company.repositories.CompanyRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class CreateCompanyUseCase {
 
-    private final CompanyRepository companyRepository;
+    @Autowired
+    CompanyRepository companyRepository;
 
     //é um bean na classe de config
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public CompanyEntity execute(CompanyEntity companyEntity){
         this.companyRepository.findByUsernameOrEmail(companyEntity.getUsername(), companyEntity.getEmail())
