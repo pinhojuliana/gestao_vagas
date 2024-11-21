@@ -1,6 +1,8 @@
 package br.com.julianapinho.gestao_vagas.modules.candidate.dto;
 
-public record AuthCandidateResponseDTO(String access_token) {
+import java.time.Instant;
+
+public record AuthCandidateResponseDTO(String access_token, Instant expires_in) {
 }
 /*
 @Data

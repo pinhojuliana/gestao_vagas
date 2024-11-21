@@ -1,7 +1,7 @@
 package br.com.julianapinho.gestao_vagas.modules.candidate.use_cases;
 
 import br.com.julianapinho.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
-import br.com.julianapinho.gestao_vagas.modules.candidate.dto.AuthCandidateRquestDTO;
+import br.com.julianapinho.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
 import br.com.julianapinho.gestao_vagas.modules.candidate.CandidateRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -29,24 +29,25 @@ public class AuthCandidateUseCase {
     @Autowired
     private PasswordEncoder encoder;
 
-    public AuthCandidateResponseDTO execute(AuthCandidateRquestDTO authCandidateRquestDTO) throws AuthenticationException {
-        var candidate = repository.findByUsername(authCandidateRquestDTO.username())
+    public AuthCandidateResponseDTO execute(AuthCandidateRequestDTO authCandidateRequestDTO) throws AuthenticationException {
+        var candidate = repository.findByUsername(authCandidateRequestDTO.username())
                 .orElseThrow(() -> new UsernameNotFoundException("Username/password incorrect"));
 
-        var passwordMatches = encoder.matches(authCandidateRquestDTO.password(), candidate.getPassword());
+        var passwordMatches = encoder.matches(authCandidateRequestDTO.password(), candidate.getPassword());
 
         if(!passwordMatches){
             throw new AuthenticationException();
         }
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
         var token = JWT.create()
                 .withIssuer("javagas")
                 .withSubject(candidate.getId().toString())
                 .withClaim("roles", List.of("candidate"))
-                .withExpiresAt(Instant.now().plus(Duration.ofMinutes(10)))
+                .withExpiresAt(Instant.ofEpochSecond(expiresIn.toEpochMilli()))
                 .sign(algorithm);
 
-        return new AuthCandidateResponseDTO(token);
+        return new AuthCandidateResponseDTO(token, expiresIn);
     }
 }
