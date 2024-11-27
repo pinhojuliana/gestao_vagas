@@ -4,7 +4,6 @@ import br.com.julianapinho.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.julianapinho.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.julianapinho.gestao_vagas.modules.company.use_cases.CreateJobUseCase;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

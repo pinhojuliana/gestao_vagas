@@ -23,7 +23,6 @@ public class SecurityCandidateFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-//        SecurityContextHolder.getContext().setAuthentication(null);
         String header = request.getHeader("Authorization");
 
         if(request.getRequestURI().startsWith("/candidate")){
@@ -41,13 +40,6 @@ public class SecurityCandidateFilter extends OncePerRequestFilter {
                 var grants = roles.stream()
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                         .toList();
-
-                /* Será que posso fazer assim?
-                var grants = token.getClaim("roles").asList(String.class)
-                        .stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
-                        .toList();
-                */
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(),
                         null,

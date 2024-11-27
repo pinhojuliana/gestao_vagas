@@ -1,6 +1,6 @@
 package br.com.julianapinho.gestao_vagas.modules.candidate.controllers;
 
-import br.com.julianapinho.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.julianapinho.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.julianapinho.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.julianapinho.gestao_vagas.modules.candidate.use_cases.CreateCandidateUseCase;
 import br.com.julianapinho.gestao_vagas.modules.candidate.use_cases.ProfileCandidateUseCase;

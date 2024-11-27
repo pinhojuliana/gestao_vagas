@@ -2,7 +2,7 @@ package br.com.julianapinho.gestao_vagas.modules.candidate.use_cases;
 
 import br.com.julianapinho.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
 import br.com.julianapinho.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
-import br.com.julianapinho.gestao_vagas.modules.candidate.CandidateRepository;
+import br.com.julianapinho.gestao_vagas.modules.candidate.repository.CandidateRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;

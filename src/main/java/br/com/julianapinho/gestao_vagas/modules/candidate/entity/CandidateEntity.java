@@ -1,4 +1,4 @@
-package br.com.julianapinho.gestao_vagas.modules.candidate;
+package br.com.julianapinho.gestao_vagas.modules.candidate.entity;
 
 
 import jakarta.persistence.Entity;
