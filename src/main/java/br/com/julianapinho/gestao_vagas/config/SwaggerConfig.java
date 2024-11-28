@@ -17,8 +17,8 @@ public class SwaggerConfig {
 
                 /*atribuiria a autenticação para todas as rotas
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
-                .components(new Components().addSecuritySchemes("Bearer Authentication", createSecurityScheme()));
-    */}
+                .components(new Components().addSecuritySchemes("Bearer Authentication", createSecurityScheme()));*/
+    }
 
     private SecurityScheme createSecurityScheme(){
         return new SecurityScheme()
