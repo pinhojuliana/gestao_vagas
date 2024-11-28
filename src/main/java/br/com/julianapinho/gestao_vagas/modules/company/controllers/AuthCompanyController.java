@@ -1,6 +1,7 @@
 package br.com.julianapinho.gestao_vagas.modules.company.controllers;
 
 import br.com.julianapinho.gestao_vagas.modules.company.dto.AuthCompanyDTO;
+import br.com.julianapinho.gestao_vagas.modules.company.dto.AuthCompanyResponseDTO;
 import br.com.julianapinho.gestao_vagas.modules.company.use_cases.AuthCompanyUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AuthCompanyController {
     private AuthCompanyUseCase authCompanyUseCase;
 
     @PostMapping("/auth")
-    public ResponseEntity<String> create(@RequestBody AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
+    public ResponseEntity<AuthCompanyResponseDTO> create(@RequestBody AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
         var result = this.authCompanyUseCase.execute(authCompanyDTO);
         return ResponseEntity.ok(result);
     }

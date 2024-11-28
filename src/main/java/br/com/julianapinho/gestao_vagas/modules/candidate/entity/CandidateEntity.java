@@ -33,8 +33,9 @@ public class CandidateEntity {
     @Email(message = "O campo [e-mail] deve conter um e-mail válido")
     private String email;
 
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\[\\]{}|\\\\;:'\",.<>?/~`-])(?=.*\\d).*$", message = "A senha deve conter pelo menos 1 caractere maiusculo, 1 número e 1 caractere especial.")
-    @Length(min = 10, max = 20, message = "A senha deve conter entre [10] e [20] caracteres")
+    @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\[\\]{}|\\\\;:'\",.<>?/~`-])(?=.*\\d).{10,20}$",
+            message = "A senha deve conter entre 10 e 20 caracteres, pelo menos 1 letra maiúscula, 1 número e 1 caractere especial.")
     private String password;
     private String description;
     private String curriculum;
