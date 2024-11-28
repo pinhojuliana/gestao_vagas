@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +45,21 @@ public class CandidateController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(name = "Candidato", description = "Informações do candidato")
+    @Operation(summary = "Perfil do candidato",
+            description = "Essa função é responsável por buscar as informações do perfil do candidato")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Lista de Jobs",
+                    content = @Content(schema = @Schema(implementation = ProfileCandidateResponseDTO.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "User not found"
+            )
+    })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<ProfileCandidateResponseDTO> get(HttpServletRequest request){
         var candidateId = request.getAttribute("candidate_id");
         var profile = profileCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
