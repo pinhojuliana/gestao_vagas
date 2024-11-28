@@ -9,21 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(
-		info = @Info(
-				title = "Gestão de Vagas",
-				description = "API responsável pela gestão de vagas",
-				version = "1.0"
-		)/*,
-		servers = {
-				@Server(url = "/", description = "Default Server URL")
-		}*/
-)
-@SecurityScheme(name = "jwt_auth",
-		scheme = "bearer", //qual o tipo? (nesse caso é bearer)
-		bearerFormat = "JWT", //especificação do bearer
-		type = SecuritySchemeType.HTTP,
-		in = SecuritySchemeIn.HEADER) //baseado na requisição http
 public class GestaoVagasApplication {
 
 	public static void main(String[] args) {
