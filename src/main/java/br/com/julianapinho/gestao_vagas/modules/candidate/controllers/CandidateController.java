@@ -26,6 +26,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/candidate")
+@Tag(name = "Candidato", description = "Informações do candidato")
 public class CandidateController {
 
     @Autowired
@@ -38,6 +39,19 @@ public class CandidateController {
     private ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
 
     @PostMapping("/")
+    @Operation(summary = "Cadastro do candidato",
+            description = "Essa função é responsável por cadastrar um novo candidato")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Candidato",
+                    content = @Content(schema = @Schema(implementation = CandidateEntity.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Usuário já existe"
+            )
+    })
     public ResponseEntity<CandidateEntity> create(@Valid @RequestBody CandidateEntity candidateEntity){
         var result = this.createCandidateUseCase.execute(candidateEntity);
         return ResponseEntity.ok(result);
@@ -45,7 +59,6 @@ public class CandidateController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidato", description = "Informações do candidato")
     @Operation(summary = "Perfil do candidato",
             description = "Essa função é responsável por buscar as informações do perfil do candidato")
     @ApiResponses({
@@ -68,7 +81,6 @@ public class CandidateController {
 
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidato", description = "Informações do candidato")
     @Operation(summary = "Listagem de vagas disponiveis para o candidato", description = "Essa função é responsável por listar todas as vagas disponiveis baseando-se no filtro")
     @ApiResponse(responseCode = "200",
             description = "Lista de Jobs",
