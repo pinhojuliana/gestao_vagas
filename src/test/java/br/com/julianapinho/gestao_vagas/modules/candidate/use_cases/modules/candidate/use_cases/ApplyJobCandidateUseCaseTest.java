@@ -19,18 +19,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ApplyJobCandidateUseCaseTest {
 
-    @InjectMocks    //fazer injeção da classe
+    @InjectMocks
     private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
-    @Mock   //dependencia da classe que será injetada
+    @Mock
     private CandidateRepository candidateRepository;
 
     @Mock
@@ -39,7 +39,6 @@ class ApplyJobCandidateUseCaseTest {
     @Mock
     private ApplyJobRepository applyJobRepository;
 
-    //depois ver no claude se posso usar a abordagem do "CaseX" pra os nomes do testes
     @Test
     @DisplayName("Should not be able to apply job with candidate not found")
     public void should_not_be_able_to_apply_job_with_candidate_not_found(){
@@ -48,18 +47,8 @@ class ApplyJobCandidateUseCaseTest {
         });
 
         assertEquals("User not found",e.getMessage());
-
-        /* forma que a professora utiilizou
-        try{
-            applyJobCandidateUseCase.execute(null, null);
-        }
-        catch{
-            assertThat(e).isInstanceOf(UserNotFoundException.class);
-        }
-         */
     }
 
-    //null ou any?
     @Test
     @DisplayName("Should not be able to apply job with job not found")
     public void should_not_be_able_to_apply_job_with_job_not_found(){
@@ -79,18 +68,28 @@ class ApplyJobCandidateUseCaseTest {
         var candidateId = UUID.randomUUID();
         var jobId = UUID.randomUUID();
 
-        ApplyJobEntity applyJob = ApplyJobEntity.builder()
-                .job()
-                .candidate()
+        var jobEntity = JobEntity.builder()
+                .id(jobId)
                 .build();
 
-        applyJob.setId(UUID.randomUUID());
+        var candidateEntity = CandidateEntity.builder()
+                .id(candidateId)
+                .build();
 
-        when(applyJobRepository.save(applyJob)).thenReturn(applyJob);
+        when(candidateRepository.findById(candidateId))
+                .thenReturn(Optional.of(candidateEntity));
+        when(jobRepository.findById(jobId))
+                .thenReturn(Optional.of(jobEntity));
+
+        var expectedApplyJob = ApplyJobEntity.builder()
+                .candidate(candidateEntity)
+                .job(jobEntity)
+                .build();
+
+        when(applyJobRepository.save(any(ApplyJobEntity.class)))
+                .thenReturn(expectedApplyJob);
 
         var result = applyJobCandidateUseCase.execute(candidateId, jobId);
-
-        assertThat(result)
     }
 
 }

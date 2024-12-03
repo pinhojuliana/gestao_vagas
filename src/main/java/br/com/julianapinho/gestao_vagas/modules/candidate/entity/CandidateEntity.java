@@ -17,6 +17,9 @@ import java.util.UUID;
 
 @Entity(name= "candidate")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CandidateEntity {
 
     @Id

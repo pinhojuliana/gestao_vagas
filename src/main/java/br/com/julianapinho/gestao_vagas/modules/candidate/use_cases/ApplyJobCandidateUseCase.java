@@ -36,7 +36,6 @@ public class ApplyJobCandidateUseCase {
                 .build();
 
         applyJob = applyJobRepository.save(applyJob);
-
         return applyJob;
     }
 }

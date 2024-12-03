@@ -21,7 +21,7 @@ public class ApplyJobEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne //muitos apply job poara um candidato
+    @ManyToOne //muitos apply job para um candidato
     @JoinColumn(name = "candidate_id", nullable = false)
     private CandidateEntity candidate;
 
