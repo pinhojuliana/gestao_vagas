@@ -2,9 +2,12 @@ package br.com.julianapinho.gestao_vagas.modules.candidate.use_cases.modules.can
 
 import br.com.julianapinho.gestao_vagas.exceptions.JobNotFoundException;
 import br.com.julianapinho.gestao_vagas.exceptions.UserNotFoundException;
+import br.com.julianapinho.gestao_vagas.modules.candidate.entity.ApplyJobEntity;
 import br.com.julianapinho.gestao_vagas.modules.candidate.entity.CandidateEntity;
+import br.com.julianapinho.gestao_vagas.modules.candidate.repository.ApplyJobRepository;
 import br.com.julianapinho.gestao_vagas.modules.candidate.repository.CandidateRepository;
 import br.com.julianapinho.gestao_vagas.modules.candidate.use_cases.ApplyJobCandidateUseCase;
+import br.com.julianapinho.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.julianapinho.gestao_vagas.modules.company.repositories.JobRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -31,6 +35,9 @@ class ApplyJobCandidateUseCaseTest {
 
     @Mock
     private JobRepository jobRepository;
+
+    @Mock
+    private ApplyJobRepository applyJobRepository;
 
     //depois ver no claude se posso usar a abordagem do "CaseX" pra os nomes do testes
     @Test
@@ -64,6 +71,26 @@ class ApplyJobCandidateUseCaseTest {
         });
 
         assertEquals("Job not found",e.getMessage());
+    }
+
+    @Test
+    @DisplayName("Should be able to create a new apply job")
+    public void should_be_able_to_create_a_new_apply_job(){
+        var candidateId = UUID.randomUUID();
+        var jobId = UUID.randomUUID();
+
+        ApplyJobEntity applyJob = ApplyJobEntity.builder()
+                .job()
+                .candidate()
+                .build();
+
+        applyJob.setId(UUID.randomUUID());
+
+        when(applyJobRepository.save(applyJob)).thenReturn(applyJob);
+
+        var result = applyJobCandidateUseCase.execute(candidateId, jobId);
+
+        assertThat(result)
     }
 
 }
