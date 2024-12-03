@@ -25,6 +25,12 @@ public class SecurityCandidateFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String header = request.getHeader("Authorization");
 
+        /*
+          AntPathRequestMatcher candidateMatcher = new AntPathRequestMatcher("/candidate/**");
+
+        if (candidateMatcher.matches(request)) {
+         */
+
         if(request.getRequestURI().startsWith("/candidate")){
             if(header != null){
                 var token = jwtCandidateProvider.validateToken(header);
