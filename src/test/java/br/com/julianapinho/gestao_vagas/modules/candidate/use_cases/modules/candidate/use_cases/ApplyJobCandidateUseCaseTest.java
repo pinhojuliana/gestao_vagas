@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -82,6 +82,7 @@ class ApplyJobCandidateUseCaseTest {
                 .thenReturn(Optional.of(jobEntity));
 
         var expectedApplyJob = ApplyJobEntity.builder()
+                .id(UUID.randomUUID())
                 .candidate(candidateEntity)
                 .job(jobEntity)
                 .build();
@@ -90,6 +91,10 @@ class ApplyJobCandidateUseCaseTest {
                 .thenReturn(expectedApplyJob);
 
         var result = applyJobCandidateUseCase.execute(candidateId, jobId);
+
+        assertThat(result).hasFieldOrProperty("id");
+        assertNotNull(result.getId());
+        assertEquals(expectedApplyJob, result);
     }
 
 }
