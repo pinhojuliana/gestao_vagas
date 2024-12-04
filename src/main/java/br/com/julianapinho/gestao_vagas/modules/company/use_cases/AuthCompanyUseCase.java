@@ -44,7 +44,6 @@ public class AuthCompanyUseCase {
         var expiresIn = Instant.now().plus(Duration.ofHours(2));
 
         var token = JWT.create().withIssuer("javagas")
-                .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
                 .withSubject(company.getId().toString())
                 .withExpiresAt(expiresIn)
                 .withClaim("roles", List.of("COMPANY"))
