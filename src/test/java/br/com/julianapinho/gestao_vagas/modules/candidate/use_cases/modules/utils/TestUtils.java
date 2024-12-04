@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class TestUtils {
-    //é a forma mais elegante?
     public static String objectToJSON(Object obj) {
         try{
             final ObjectMapper objectMapper = new ObjectMapper();
