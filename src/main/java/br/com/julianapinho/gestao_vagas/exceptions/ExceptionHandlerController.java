@@ -44,7 +44,7 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
-    @ExceptionHandler({UserNotFoundException.class, JobNotFoundException.class, UsernameNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, JobNotFoundException.class, UsernameNotFoundException.class, CompanyNotFoundException.class})
     public ResponseEntity<Object> handleNotFoundException(Exception e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
