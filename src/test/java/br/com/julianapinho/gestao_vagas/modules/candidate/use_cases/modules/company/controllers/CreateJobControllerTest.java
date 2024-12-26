@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class CreateJobControllerTest {
+class CreateJobControllerTest {
 
     private MockMvc mvc;
 
@@ -39,7 +39,7 @@ public class CreateJobControllerTest {
     private CompanyRepository companyRepository;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
@@ -47,7 +47,7 @@ public class CreateJobControllerTest {
     }
 
     @Test
-    public void should_create_a_new_job() throws Exception {
+    void should_create_a_new_job() throws Exception {
 
         var company = companyRepository.saveAndFlush(CompanyEntity.builder()
                 .description("COMPANY_DESCRIPTION")
@@ -73,7 +73,7 @@ public class CreateJobControllerTest {
     }
 
     @Test
-    public void should_not_create_a_new_job_because_company_is_not_found() throws Exception {
+    void should_not_create_a_new_job_because_company_is_not_found() throws Exception {
         CreateJobDTO createJobDTO = new CreateJobDTO("DESCRIPTION_TEST",
                 "BENEFITS_TEST",
                 "LEVEL_TEST");
