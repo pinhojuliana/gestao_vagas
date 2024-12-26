@@ -22,10 +22,6 @@ public class ExceptionHandlerController {
 
     private final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
-    private ExceptionHandlerController(MessageSource message){
-        this.messageSource = message;
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<ErrorMessageDTO>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         List<ErrorMessageDTO> dto = new ArrayList<>();
